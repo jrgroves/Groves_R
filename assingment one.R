@@ -27,14 +27,36 @@ library(ipumsr)
                 )
     
     ts<-submit_extract(data_ext)
-    downloadable_extract<-wait_for_extract(ts)
-    filepath <- download_extract(downloadable_extract)
+    wait_for_extract(ts)
+    filepath <- download_extract(ts)
     
     dat <- read_nhgis(filepath)
 
 #Basic Clan of data
     
     dat2 <- dat %>%
-      select(GISJOIN, STATEFP, ends_with(c("1970", "1980", "1990", "2000", "2010", "2020"))) %>%
-      filter(!is.na(STATEFP))
+      select(STATEFP, ends_with(c("1970", "1980", "1990", "2000", "2010", "105"))) %>%
+      filter(!is.na(STATEFP)) %>%
+      pivot_longer(!STATEFP, names_to = "series", values_to = "estimate") %>%
+      mutate(series = str_replace(series, "105", "2010"),
+             year = substr(series, 6, nchar(series)),
+             series = substr(series, 1, 5)) %>%
+      distinct(STATEFP, series, year, .keep_all = TRUE) %>%
+      filter(!is.na(estimate)) %>%
+      pivot_wider(id_cols = c(STATEFP, year), names_from = series, values_from = estimate) %>%
+      select(-B18AE)
+    
+    %>%
+      mutate(und18 = rowSums(across(B57AA:B57AD)) / A00AA,
+             over65 = rowSums(across(B57AP:B57AR)) / A00AA,
+             white = B18AA / A00AA,
+             black = B18AB / A00AA,
+             asian = B18AD / A00AA,
+             other = 1 - white - black - asian, 
+             lessHS = (BW7AA + BW7AB) / A00AA,
+             HSGED = BW7AC / A00AA,
+             smCOL = BW7AD / A00AA,
+             Deg = BW7AE / A00AA)
+    
+    
     

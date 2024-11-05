@@ -9,11 +9,6 @@ This is my own personal copy of the main repository for the Introduction to R in
 
 - Data AA00  
 -- AA    Persons: Total
-- Data A57  
--- AA    Persons: Urban                                                     
--- AB    Persons: Urban--Inside urbanized areas                             
--- AC    Persons: Urban--Outside urbanized areas (in urban clusters)        
--- AD    Persons: Rural
 - Data B57  
 -- AA    Persons: Under 5 years            
 -- AB    Persons: 5 to 9 years            
@@ -41,8 +36,12 @@ This is my own personal copy of the main repository for the Introduction to R in
 -- AE    Persons: Two or More Races                                              
 - Data CL6  
 -- AA    Persons: Poverty status is determined ~ Income below poverty level       
-- Data B69  
--- AA    Persons: 25 years and over ~ Less than 9th grade                                                       
--- AB    Persons: 25 years and over ~ 9th grade to 3 years of college (until 1980) or to some college o…        
--- AC    Persons: 25 years and over ~ 4 or more years of college (until 1980) or bachelor's degree or h…   
+- Data BW&  
+
+AA: Persons: 25 years and over ~ Less than 9th grade
+AB: Persons: 25 years and over ~ 9th to 11th grade
+AC: Persons: 25 years and over ~ 12th grade or high school graduate, GED, or alternative, and less than 1 year of college
+AD: Persons: 25 years and over ~ 1 to 3 years of college (until 1980) or 1 or more years of college with no degree or with associate's degree (since 1990)
+AE: Persons: 25 years and over ~ 4 or more years of college (until 1980) or bachelor's degree or higher (since 1990)
+ 
 
