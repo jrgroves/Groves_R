@@ -17,7 +17,8 @@ The first thing you need to do is to download some software that we will be usin
 3. Git
 
    The next program we will download is Git. This is a version control software and is used to help keep track of changes that are made when you are writting a paper or writing code for a program or project. The idea behind version control is like a library where you can store the main information on the cloud and then update what is there when you have made changes that you want to keep. Another key feature is that it keeps a record of each time you submit changes so you can go back, or revert, to any previous version of a project.  
-   [Download Git Installer for Windows](https://gitforwindows.org/) 
+   [Download Git Installer for Windows](https://gitforwindows.org/)
+   
    [Download Git Installer for macOS](https://git-scm.com/downloads/mac)
 
 5. R Studio
