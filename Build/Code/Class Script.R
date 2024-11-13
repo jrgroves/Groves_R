@@ -116,13 +116,13 @@ library(sf)
           panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
           panel.border = element_blank()) +
-    scale_fill_gradient2(low = "lightblue", high = "blue", na.value = NA, 
+    scale_fill_gradient2(low = "lightblue", high = "blue", na.value = "black", 
                          name = "LN(Sightings)",
                          limits = c(0, 9)) +
     facet_wrap( ~ decade)
               
   
-
+  theme_gtsummary_compact()
     
   c <- ufo.map %>% 
       st_drop_geometry() %>%
@@ -155,12 +155,12 @@ library(sf)
     add_stat_label(label = n ~ c("Mean", "Total", "States")) %>%
     modify_header(all_stat_cols() ~ "**{level}**",
                   label ~ "")  %>%
-    remove_row_type(n, type = "header") #%>%
+    remove_row_type(n, type = "header") %>%
   as_gt() %>%
     tab_header(title = md("**Table 2** Summary of Sightings")) %>%
     gtsave("Table 2.png", path = "./Analysis/Output/")
   
 
-  theme_gtsummary_compact()
+
                        
     
