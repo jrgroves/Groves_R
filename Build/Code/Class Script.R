@@ -145,13 +145,18 @@ dec <- load_variables(2000, "sf3")
           panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
           panel.border = element_blank()) +
-    scale_fill_gradient2(low = "lightblue", high = "blue", na.value = NA, 
+    scale_fill_gradient2(low = "lightblue", high = "blue", na.value = "black", 
                          name = "LN(Sightings)",
                          limits = c(0, 9)) +
     facet_wrap( ~ decade)
               
+<<<<<<< HEAD
   theme_gtsummary_compact()
 
+=======
+  
+  theme_gtsummary_compact()
+>>>>>>> 2012ea911e7a0e5dfb4c001865e33f1e39c00d8f
     
   c <- ufo.map %>% 
       st_drop_geometry() %>%
@@ -190,6 +195,7 @@ dec <- load_variables(2000, "sf3")
     gtsave("Table 2.png", path = "./Analysis/Output/")
   
 
+<<<<<<< HEAD
 #Regressions
   library(ipumsr)
   
@@ -206,6 +212,9 @@ dec <- load_variables(2000, "sf3")
   filepath <- download_extract(ts)
   
   dat <- read_nhgis(filepath)
+=======
+
+>>>>>>> 2012ea911e7a0e5dfb4c001865e33f1e39c00d8f
                        
   dat2 <- dat %>%
     select(STATEFP, ends_with(c("1970", "1980", "1990", "2000", "2010", "105", "2020", "205"))) %>%
