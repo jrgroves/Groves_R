@@ -5,20 +5,19 @@
 
 rm(list = ls())
 
-
 library(tidycensus)
 library(tidyverse)
 library(gt)
 library(gtsummary)
 library(sf)
 
-dec <- load_variables(2000, "sf3")
+#census_api_key("9018e926f770ef85d125093f536ac4737154ce08", overwrite = FALSE, install = TRUE)
 
 #Loading Data####
   ufo <- read.csv(file = "./Data/scrubbed.csv", header = TRUE, as.is = TRUE, sep = ",")
  
-  #from https://mattherman.info/blog/tidycensus-mult-year/
-  years <- lst(2010, 2005)
+    #from https://mattherman.info/blog/tidycensus-mult-year/
+  years <- lst(2010, 2011, 2012)
   
   cen.stat <- map_dfr(   
     years,
@@ -44,9 +43,8 @@ dec <- load_variables(2000, "sf3")
     filter(country == "us") %>%
     select(-comments) %>%
     mutate(date = as.Date(str_split_i(datetime," ", 1), "%m/%d/%Y"),
-           year = year(date),
-           decade = year - year %% 10) %>%
-    filter(decade > 1959)
+           year = year(date)) %>%
+    filter(year %in% years)
   
       
   cen.map <- cen.stat %>%
@@ -69,42 +67,41 @@ dec <- load_variables(2000, "sf3")
            deg = (B14+B15+B31+B32) / B01,
            addeg = (B16+B17+B18+B33+B34+B35) / B01,
            tpop = B01,
-           decade = as.character(year)) %>%
-    select(decade, GEOID, nohs:tpop)
+           year = as.numeric(year)) %>%
+    select(year, GEOID, nohs:tpop)
    
 #Aggregating and Merging
   
   ufo.st <- ufo.us %>%
-    count(state, decade) %>%
+    count(state, year) %>%
     mutate(Abbr = toupper(state),
-           decade = as.character(decade)) %>%
+           year = as.numeric(year)) %>%
     full_join(., st_abb, by = "Abbr") %>%
     filter(!is.na(n)) %>%
     rename("GEOID" = "Code") %>%
     mutate(GEOID = str_pad(as.character(GEOID), width = 2, side = "left", pad="0"))
   
   ufo.map <- cen.stats %>%
-    left_join(., ufo.st, by=c("GEOID", "decade")) %>%
-    mutate(decade = as.factor(decade),
+    left_join(., ufo.st, by=c("GEOID", "year")) %>%
+    mutate(year = as.factor(year),
            state = as.factor(state),
            ln_n = log(n))
   
-  
   ggplot(ufo.map) +
-    geom_boxplot(aes(x = decade, y = ln_n), color = "navy")  + 
+    geom_boxplot(aes(x = year, y = ln_n), color = "navy")  + 
     theme_bw()  + 
     labs(title = "Box Plot of UFO sightings by Decade in the U.S.",
          caption = "Data obtained from Kaggle.com",
          x = "Decade",
          y = "Natural Log of Annual Sightings")
   
-  ggplot(subset(ufo.map, decade == 1990)) +
+  ggplot(subset(ufo.map, year == 2010)) +
     geom_sf(aes(fill = ln_n)) +
     labs(title = "Natural Log of UFO Sightings by Decade in the U.S.",
          caption = "Data obtained from Kaggle.com") 
   
   
-  ggplot(subset(ufo.map, decade == 1990)) +
+  ggplot(subset(ufo.map, year == 2010)) +
     geom_sf(aes(fill = ln_n)) +
     labs(title = "Natural Log of UFO Sightings by Decade in the U.S.",
          caption = "Data obtained from Kaggle.com") +
