@@ -1,7 +1,5 @@
-
 #econ691 #R #Programing #Class 
 #R #Class #Programing #econ691
-
 # Download and Install
 The first thing you need to do is to download some software that we will be using for the course. Please note that I should be able to help with installation on PCs, but less so with Apple devices.
 1. Text Editor
@@ -578,7 +576,37 @@ The final element we want to address is creating a map for each decade. One appr
 ## Summary Statistics / Tables
 Every empirical analysis **MUST** contain a table of summary statistics of the data that is going to be analyzed. You can so statistics of the data before cleaning, but this should be used to simply support a story, the summary statistics is an essential element for the analysis to give the reader a sense of what your data is saying. Another key element with the summary statistics, or any other table, is the ability to export that table into a format that matches with however you are writing your paper. For example, if you are writing in LaTeX, you need to be able to export the table in that format. If you are using something like WORD, you may be able to output the table, if set up correctly, as an image that can be pasted; however, most editor will eventually want a editable version of the table so this leaves us with either a text export or html. 
 
-While it takes a bit to get used to, myself included, we will be using the packages *gt* and *gtsummary* to create our tables. The first table we will create is a summary statistics table and the first "hack" is to make sure that there is nothing in the dataframe you are using other than what you want in the table. For example, the first table we will make will show us the mean and total sightings by decade across all states. The code block is below:
+### A Simple Approach
+To create simple and quick tables of summary statistics and regression results (for most models), we can use the package *stargazer* [https://cran.r-project.org/web/packages/stargazer/vignettes/stargazer.pdf]. What is nice about this package is it allows some customization, will output in either text, HTML, or LaTeX formats, and, most importantly, can "guess" as to what type of table you want. 
+
+We are going to create a simple summary statistics table using our new **ufo.core** object which you should be able to create using the *Class_Regression.R* script from the repository. The general form of the stargazer function is:
+```R
+stargazer(data, type = c("text", "html", "latex"), out = "output file name",
+		 covariate.label = c(COVARIATE LABELS))
+```
+
+So for our uses at this time, lets create an HTML version of the table so we can see what we are working with. Use the command:
+```R
+stargazer(as.data.frame(ufo.core), type = "html", out = "./Analsysi/Output/Table1.html")
+```
+If we look at our FILES tab in `R Studio` we can navigate to the Analysis and Output folders and see the file we just created. Click on this and choose "View in Browser" and we will see the layout. If we would rather have an `LaTeX` version of the file, we can simply replace the "html" option with "latex" option and replace the file extension with ".txt" 
+
+Now when we click on that new file, we will see the table formatted in our viewer. The file we saved, however, can be opened in any text editor and we will get what we see in the console output in `R Studio` which is the correct `LaTeX` code for the table. 
+
+To clean up this table a bit, we can add some customization to it. The code block is below:
+```R
+  stargazer(as.data.frame(ufo.core), 
+            type = "html", 
+            out = "./Analysis/Output/Table1.html",
+            title="Table 1: Summary Statistics",
+            covariate.labels = c("No Highschool Degree", "Highschool Diploma",
+				            "Some College", "Undergraduate Degree","Advanced Degree",
+				            "LN of Total Population","Sightings", "LN of Sightings"))
+```
+
+The `title = ` option allows us to give the table a title, and the `covariate.labels =` allows us to replace the vector labels with more readable text. 
+### A Complicated (yet highly customizable) Approach
+While it takes a bit to get used to, myself included, we can create a more detailed and customizable table  using the packages *gt* and *gtsummary*.  One reason we might consider this is because the *stargazer* package does not necessarily work for all tables whereas, with some work and Google searcher, the *gt* suite can produce nearly anything. The first table we will create is a summary statistics table and the first "hack" is to make sure that there is nothing in the dataframe you are using other than what you want in the table. For example, the first table we will make will show us the mean and total sightings by decade across all states. The code block is below:
 ```R
   d<-ufo.map %>%
     st_drop_geometry() %>%
@@ -620,10 +648,70 @@ The remaining commands in our code block do just that. The `add_stat_label` allo
 
 To add the table title and export the title, we need to convert it to a *gt* object using the `as_gt()` command. After that, we can use the commands within the *gt* package to customize further. The `tab_header` command can be used to create titles, subtitles, and footnotes and the `gtsave()` command is what helps us get the table out of `R` and into something else we can use. 
 
-
-
 # Regression Analysis
 
+Finally we want to run a regression looking at how various factors we have collected about states may impact, if at all, the number of sightings of UFOs. With regressions, we will be making sure our data is in the right format, looking at the command for running a simple linear regressions, and then how to display and convey the results. 
 
+Simple linear regressions can be carried out using the command `lm(y~X, data)` where the first option is  the expression of the regressions model and the second gives the dataframe the data is located in.  When creating a regressions, we want to make sure to assign the results to an object so we can revisit them later and call on them when we create out tables. We are going to run the three models in the code block below:
+```R
+ mod1 <- lm(ln_n ~ nohs + hson + smcol + deg + tpop, data = ufo.core)
+ mod2 <- lm(ln_n ~ nohs + hson + smcol + deg + tpop + factor(year), data = ufo.core)
+ mod3 <- lm(ln_n ~ nohs + hson + smcol + deg + tpop + factor(year) + factor(State), data = ufo.core)
+```
 
+You can see in the second model we add year fixed effects by using the `factor()` command and then do the same thing in the third model with states. The only need here is that the variable needs to have distinct levels and cannot be continuous. We could have created the summary variables themselves, but that would have complicated our code. 
+
+Looking in our environment tab we see these three new objects and notice that they are lists. This is where the regression results and other necessary information are held. We can see the entire results by using the command `summary()`. Doing so yields the following output in the console.
+
+```R
+Call:
+lm(formula = ln_n ~ nohs + hson + smcol + deg + tpop, data = ufo.core)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.30680 -0.28473 -0.02163  0.25006  1.54566 
+
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept) -13.23831    1.50852  -8.776 3.95e-15 ***
+nohs        -10.32743    4.74525  -2.176  0.03112 *  
+hson          3.53486    1.28571   2.749  0.00672 ** 
+smcol         6.72622    1.33816   5.026 1.43e-06 ***
+deg           2.27399    3.00561   0.757  0.45051    
+tpop          1.02255    0.04208  24.300  < 2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.4663 on 147 degrees of freedom
+Multiple R-squared:  0.8183,	Adjusted R-squared:  0.8122 
+F-statistic: 132.4 on 5 and 147 DF,  p-value: < 2.2e-16
+```
+
+The problem with this output is that it is not very helpful if we need to put this in a paper or look at various models together. This is where the *stargazer* package comes in. If we a similar command to that above replacing the dataframe with the model results, we see we can get a nice table output with our results. 
+```R
+stargazer(mod1, mod2, mod3,omit = ".State.",
+                         type = "html",
+                         out = "./Analysis/Output/Table2.html",
+                         add.lines=list(c("State F.E.", "NO", "NO", "YES")),
+                         dep.var.labels = "LN(Sightings)",
+			             covariate.labels=c("No Highschool Degree", "Highschool Diploma","Some College","Undergraduate Degree","Total Population", "2011 F.E.","2012 F.E."))
+
+```
+
+With this we can see all three of our models together in one single table. One new element is the use of the `omit = ` option. This is written in what is called *Regular Expression* and is a way of referring to text. The period is essentially a wildcard meaning anything can come before or after the word STATE, but that we want to omit anything with the work STATE in it. This removes all of the state fixed effects from our model. The second new element is the addition of the line that indicates which model has or does not have state fixed effects. Similar to `LaTeX` typesetting, we need an entry for the column of labels, and then for each of the data columns. 
+
+An alternative to *stargazer* is the *jtools* package. With this we define our coefficients labels that we want to show and then we can use the `plot_summs()` command to get a nice plot of the coefficients and then the command `export_summs()` to export the tables into various forms. The nice thing about this version of the table export is that you can export it as a `*.docx` document and open it in Word. The code is below.
+
+```R
+library(jtools)
+coef <- c("No Highschool Degree" = "nohs", "Highschool Diploma" = "hson","Some College" = "smcol",
+          "Undergraduate Degree" = "deg","LN of Total Population" = "tpop", 
+          "Fixed Effect: 2011" = "factor(year)2011",
+          "Fixed Effect: 2012" = "factor(year)2012")
+
+plot_summs(mod1, mod2, mod3, coefs = coef)
+
+export_summs(mod1, mod2, mod3, coefs = coef,
+             to.file = "docx", file.name = "./Analysis/Output/Reg.docx")
+```
 
