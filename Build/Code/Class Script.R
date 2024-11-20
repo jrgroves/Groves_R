@@ -2,6 +2,7 @@
 #
 #By: Jeremy Groves
 #Date: November 5, 2024
+#Updated: November 20, 2024
 
 rm(list = ls())
 
@@ -153,7 +154,7 @@ library(sf)
  
 #Regression Analysis####
  
- mod1 <- lm(ln_n ~ nohs + hson + smcol + deg + tpop, robust,  data = ufo.core)
+ mod1 <- lm(ln_n ~ nohs + hson + smcol + deg + tpop, data = ufo.core)
  mod2 <- lm(ln_n ~ nohs + hson + smcol + deg + tpop + factor(year), data = ufo.core)
  mod3 <- lm(ln_n ~ nohs + hson + smcol + deg + tpop + factor(year) + factor(State), data = ufo.core)
   
