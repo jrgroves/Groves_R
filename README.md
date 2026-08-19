@@ -146,7 +146,7 @@ When working with commands such as this, we include in the parathesis a set of c
 
 Next we set the option "header" to TRUE to indicate that the first row of the data are column headers and thus should be used as the column names in the resulting dataframe. Next we tell `R` to read the file as it is formatted meaning that characters are read as character and numbers are read as numeric. Finally, we have the option "sep" which sets the separator for the delineated file. The default is the comma, however, we can also use other options such as the bar "|". Running this command creates the object **gas** and assign the data from the file "gas.csv".  
 
->[!Language Lesson]
+>[!NOTE]
 You may have encountered an error message, however, most likely the data loaded and you can see the object **gas** in the Environment. This data, however, is completely useless to you and you may not even know it. Take a closer look and notice that there are 1858 observations but only 1 variable.
 >
 `R` is an object-based language and the most common form of an object is a vector. To see what we mean, type `A <- "Hello world!"` in the console and push Enter. This creates the *object* called **A** and as assigned it the value "Hello world!". The thing about vectors, however, is that they must be constructed of a single type of data meaning that we can not mix numerical and character data within the same vector (unless we translate the numerical data to a character type). To see what we mean, type `is(A)` into the console and you will see 
@@ -170,7 +170,7 @@ gas <- read.csv(file = "./Data/gas.csv", header = TRUE, as.is = TRUE, sep = ",",
 
 Running this command gives us a new version of the **gas** object (note that you were not asked if you wanted to replace it, it just does so) that has 1854 observations and 2 variables. Using our `head()` command shows us the data is mostly in the expected form now with the exception of the extremely long column names. If we look at our view of gas.csv in the editor pane, we see that the labels contained spaces whereas in the console the spaces are replaced with periods. This is because spaces are not allowed in column names or in object names. 
 
->[!NOTE]
+>[!TIP]
 >DO NOT use spaces in names of objects or vectors within a dataframe. Either use camelBack (capitalization of each word with no spaces), periods, or underscores. While it is possible to use spaces, it can create major complications and more often than not will lead to errors in running your code and confusion in reading your code.
 
 To see our dataframe we can access it in a few ways. The worse way would be to simply type in **gas** into the console. The method we use should be dictated by the goal. If we are simply checking to make sure all is well with the data, we can use the `head()` or `tail()` command. Using this for any object will give you the first six rows of the dataframe or last six rows, respectively. This gives us a feel for our data. If we want to see the entire dataframe, we can use the command `view()` which will open a spreadsheet like tab in our editor window space in which we can scroll through the entire dataframe. We can only view this, however, we can not edit anything. We can open a special editing window, but remember, we want to track all of our edits so we will avoid doing that. 
