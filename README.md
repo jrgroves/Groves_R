@@ -1,5 +1,4 @@
-#econ691 #R #Programing #Class 
-#R #Class #Programing #econ691
+
 # Download and Install
 The first thing you need to do is to download some software that we will be using for the course. Please note that I should be able to help with installation on PCs, but less so with Apple devices.
 1. Text Editor
