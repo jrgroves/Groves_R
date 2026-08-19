@@ -1,117 +1,86 @@
-
 # Download and Install
 The first thing you need to do is to download some software that we will be using for the course. Please note that I should be able to help with installation on PCs, but less so with Apple devices.
-1. Text Editor
-
+## Text Editor
    This is not an absolute requirement because most operating system have a built in text editor. That said, I have found Notepad ++ to be quite useful because it will allow you to write text in just about any language (html, markdown, plain, etc.) and will recognize the format. There are also lots of plugins that you can add depending on what you do.  
    [Download Notepad++](https://notepad-plus-plus.org/downloads/)
-
-2. R Core
-
-   The next thing you will need is to install the core R program. R is a free programing language that you can use for pretty much anything and is along the lines of Python. The core R program has many capabilities, however, the real power comes from the packages or "libraries" that you can add to the software. These are created by other users and are typically specialized for specific tasks ranging from web scraping to simple regressions.  
+## Git
+   The next program we will download is Git. This is a version control software and is used to help keep track of changes that are made when you are writing a paper or writing code for a program or project. The idea behind version control is like a library or a journal where you can store key elements in the cloud and then update when you make made changes that you want to keep. Another key feature is that it keeps a record of each time you submit changes so you can go back, or revert, to any previous version of a project.  
+   [Download Git](https://gitforwindows.org/)
+## R Core
+   The next thing you will need is to install the core R program. R is a free programing language that you can use for pretty much anything similar to Python. The core R program has many capabilities, however, the real power comes from the packages or "libraries" that you can add to the software. These are created by other users and are typically specialized for specific tasks ranging from web scraping to simple regressions.  
    [Download Core R for Windows](https://cran.r-project.org/bin/windows/base/)  
    [Download Core R for iOS](https://cran.r-project.org/bin/macosx/)
-
-3. Git
-
-   The next program we will download is Git. This is a version control software and is used to help keep track of changes that are made when you are writing a paper or writing code for a program or project. The idea behind version control is like a library where you can store the main information on the cloud and then update what is there when you have made changes that you want to keep. Another key feature is that it keeps a record of each time you submit changes so you can go back, or revert, to any previous version of a project.  
-   [Download Git](https://gitforwindows.org/)
-
-4. R Studio
-
+## R Studio
    The last thing we will download is going to be R Studio and it is going to be our workhorse. In short, it is a graphical user interface (GUI) that allows us to access Core R, libraries we download, version control, and many other aspects of a project all in one place. It is even possible to write an entire paper within R Studio and, most importantly, it is free.  
    [Download R Studio](https://posit.co/download/rstudio-desktop/) *Scroll down for various operating system downloads.*
 
-5. U.S. Census API Key
-
+## U.S. Census API Key
    We will be using a service of the U.S. Census Bureau known as an API and this requires obtaining an API Key. This is free and simply a means of keeping tabs on who is accessing the database for what use. To obtain a key, go to the [Census Key Website](https://api.census.gov/data/key_signup.html) and fill in your name, email address (really should use your z-id email address) and agree to the terms of service. Your key will now be sent to you in your email account. Make sure to save this email, because we will be using it in class.
-
-
 # Setup and Configuration
-Now that we have the programs installed using the default options, we need to make some configuration changes and setup some options within the software. 
-
+Now that everything is installed, open your RStudio program and you should see a screen that looks something like this:
+![[Pasted image 20251031124157.png]]
+While not necessary, we will do just about everything we need to do to get setup in the RStudio interface. Specifically we will set up our GIT identification and set up our working directory structure.
 ## GIT Identification
-The first thing we need to do is to identify yourself to `GIT` show that when we commit changes, we can know *who* made those changes. We will do this using `GIT Bash` which is the command line or shell version of `GIT` (similar to what we did in an early Tech Taco Tuesday). If you look at the set of files installed when you installed GIT on your machine, one option will be `GIT Bash`. Once that window has popped up, you are given the command prompt where you need to input the two lines of command. Use your own name and email address that corresponds to your GitHub account.
+To use `GIT`, you need to identify yourself so that when we commit changes, we can know *who* made those changes. We will do this using the RStudio terminal which is a command line based shell. Other options are to use `GIT Bash` which you installed when you installed GIT on your machine, or your operating systems own terminal or command line system. For us, notice in the top left window of RStudio we see three tabs: Console, Terminal, and Background Jobs.  You will need to click on Terminal to access the shell program. Once that window has popped up, you are given the command prompt where you need to input the two lines of command. Use your own name and email address that corresponds to your GitHub account.
 
 ```bash
 git config --global user.name "Jeremy R. Groves"
 git config --global user.email "jgroves@niu.edu"
 ```
 This will now tag all of your `GIT` work with your name and email so that we can make sure we know who has submitted what changes.
-
-## R Library Setup
-`R` is a solid program for data analysis; however, most of its power comes in its ability to use libraries. These are add-ons created by other users that expand what the program can do or simplify the way a script is written. Most of these packages are located at the CRAN website; however, others can be found on GitHub. To use them, they must first be downloaded and then installed into `R`. Another aspect of how `R` works is that when the base `R` is updated and you install the new version, it DOES NOT overwrite the previous version, rather it installs the new version along side the older version. The reason for this is that some of the libraries fall out of use and are not updated for new `R` versions and so having an older version allows users to access those tools. The tradeoff to this system is that the libraries are installed in the version specific folder so when you update `R`, you must also reinstall all libraries. Since we do not typically run into the version problem, it becomes helpful to place all of your libraries into one common directory and then just update where `R` looks for the library files.  
-
-To make this change, we first need to find the `Rprofile.R` file on your computers. For PC users you can find this file at `C:/Program Files/R/*current install*/library/base/R`. Navigate here using your file explorer program and then find the file Rprofile.R and right-click and choose to edit with Notepad++ or other text editor. When it opens, scroll all the way down to the bottom and then add the following text.  [[R Library Setup]]
-
-```R
-#My Stuff
-myPaths <- c("C:/Users/HP/Documents/R/userLibrary", .libPaths())
-.libPaths(myPaths)
-```
-
-Within this code, the command `.libPaths()` holds the location of where `R` looks for library files when you use the `library()` command in your script. This code updates that object by adding the user defined library location. My listing this one first, it also designates our user defined library as the default location when we install libraries for `R` to use. By placing this command in the `Rprofile.R` script, which is a script `R` runs on start up, we are always updating this variable every time we start up `R`. 
-
-Now lets go ahead and install a couple of libraries by opening `R Studio` and looking in the window on the left side. At the cop should be three tabs: "Console", "Terminal", and "Background Jobs". The console, which is the default, is the communications channel with `R` where we can input individual commands and see the output and is the most commonly used tab for us. To install our first package, we will use the base-R command `install_packages()` and the package we will install is *usethis*. To complete the task, enter the command `install_packages("usethis")` at the carrot-prompt in the console and hit enter. It may ask you to choose a CRAN site and you should just need to enter the number for your choice. Different CRAN sites will have different achieves of past versions, but all will have the most recent version of any given package. You will see some feedback in the console showing you that `R` is downloading the package and installing it in your library file. Note that this simply installs it on your system, to use it in `R` we will still need to load it into the environment and we will do that later.
-
-Another nice package we will use frequently is the *tidyverse* package which is a collection of several packages that make getting, cleaning, manipulating, and visualizing data of various types (numbers, character strings, dates, ect.) much easier and intuitive. How do you think you would install this package?
-
-<details>
-  <summary> Answer </summary>
-  
-```R 
-install_packages("tidyverse")
-```
-</details>
-
 ## R-Studio and Git/GitHub
-Next we want to link `R Studio` with `Git` and allow it to access GitHub. We will discuss `R Studio` more later, but it is basically a Graphic User Interface (GUI) that combines several data tools and allows use to more easily interact with `R` which is a command-line based program. We do not have to use `R Studio` to utilize the feature of Git or GitHub because we can use the command line prompts (Git Bash) for that as well. Since `R Studio` provides a standard means of interacting with `R`, especially for novice users, we will continue to use this. With `R Studio` still open, go to the menu across the top of the screen and locate `TOOLS --> GLOBAL OPTIONS` and a smaller screen will open. Along the left side, click on the part that states `GIT/SVN` and then make sure the box at the top is checked and then in the area below "Git Executable" you need to navigate to the `git.exe` file. On a PC, it will be located at `C:/Program Files/Git/bin/git.exe`. You can either type this address in or you can naviagate to it via the Browse button. Once this box is filled in, click Apply and then Okay.
+Next we want to link `R Studio` with `Git` and allow it to access GitHub securely. We do not have to use `R Studio` to utilize the feature of Git or GitHub because we can use the command line prompts (Git Bash) for that as well. Since `RStudio` provides a standard means of interacting with `Git`, we will continue to use this. With `RStudio` still open, go to the menu across the top of the screen and locate `TOOLS --> GLOBAL OPTIONS` and a smaller screen will open. Along the left side, click on the part that states `GIT/SVN` and then make sure the box at the top is checked and then in the area below "Git Executable" you need to navigate to the `git.exe` file. On a PC, it will be located at `C:/Program Files/Git/bin/git.exe`. You can either type this address in or you can navigate to it via the **Browse** button. Once this box is filled in, click **Apply** and then **Okay**.
 
-[image here]
+![[Pasted image 20251031125617.png]]
 
-Next, we need to allow GitHub and `R Studio` to talk to each other securely and for that we need a personal passkey. Fortunately someone wrote a library and program in `R` for just that purpose. Since we are not going to download the full library with these commands in them, we can use the `usethis::` command prefix and then use the command `create_github_token()`. 
+Next, we need to allow GitHub (our cloud version) and `R Studio` to talk to each other securely and for that we need a personal passkey. Fortunately someone wrote a library and program in `R` for just that purpose. Since we are not going to download the full library with these commands in them, we can use the `usethis::` command prefix and then use the command `create_github_token()`. To run the necessary code, choose the Console option of the three tab in the left-side window of `RStudio` and type each of the lines of code below following each with the ENTER key.
 
 ```R
+install.packages("usethis")
 usethis::create_github_token()
 ```
 
-This should open up GitHub on your browser and ask you to log in. Once you do that, name your passkey whatever you want and then click on the drop-down menu and choose at least 90 Days. Scroll to the bottom and click Generate Token and you will get a sting of letters and numbers. This is Hexadecimal text and make sure to copy this and then paste it either in a Word file or a text file because once you close this window, you will NEVER get this token back. If you lose it; however, you can just generate a new one and use it. Once you have copied the code somewhere else, go back to R-Studio and then type the following in the console.
+After the second command, GitHub should open on your browser and ask you to log in. Once you do that, you should see the following screen.
+
+![[Pasted image 20251031125925.png]]
+
+You can name your passkey whatever you want and then click on the drop-down menu and choose at least 90 Days (this will get us through the class). Scroll to the bottom and click **Generate Token** and you will get a sting of letters and numbers. This is Hexadecimal text and make sure to copy this and then paste it either in a Word file or a text file because once you close this window, you will NEVER get this token back. If you lose it; however, you can just generate a new one and use it. Once you have copied the code somewhere else, go back to `RStudio` and then type the following in the console.
 
 ```R
 gitcreds::gitcreds_set()
 ```
 
 You should see a set of options and you should choose `2` and then when it asks for the token, paste the hexadecimal code you copied and press enter. This will save the passkey in the R system files and you will only need to do this again if your code expires or, sometimes, when you update R.  
+## R Library Setup (optional)
+`R` is a solid program for data analysis; however, most of its power comes in its ability to use libraries. These are add-ons created by other users that expand what the program can do or simplify the way a script is written. Most of these packages are located at the CRAN website; however, others can be found on GitHub. To use them, they must first be downloaded and then installed into `R`. Another aspect of how `R` works is that when the base `R` is updated and you install the new version, it DOES NOT overwrite the previous version, rather it installs the new version along side the older version. The reason for this is that some of the libraries fall out of use and are not updated for new `R` versions and so having an older version allows users to access those tools. The tradeoff to this system is that the libraries are installed in the version specific folder so when you update `R`, you must also reinstall all libraries. Since we do not typically run into the version problem, it becomes helpful to place all of your libraries into one common directory and then just update where `R` looks for the library files.  
 
-### Brief Tour
+To make this change, we first need to find the `Rprofile.R` file on your computers. For PC users you can find this file at `C:/Program Files/R/*current install*/library/base/R`. Navigate here using your file explorer program and then find the file `Rprofile.R` and right-click and choose to edit with **Notepad++** or other text editor. When it opens, scroll all the way down to the bottom and then add the following text. 
 
-`R Studio` is a GUI, or Graphic User Interface, and allows us to access a command-line type program such as `R` in a more failure windows-esk environment. When you first open `R Studio` you will typically see the screen split into two panels with a long window on the left and another split-panel on the right.
+```R
+#My Stuff
+myPaths <- c("C:/Users/.../Documents/R/userLibrary", .libPaths())
+.libPaths(myPaths)
+```
 
-[image here]
+Within this code, the command `.libPaths()` holds the location of where `R` looks for library files when you use the `library()` command in your script. This code updates that object by adding the user defined library location. My listing this one first, it also designates our user defined library as the default location when we install libraries for `R` to use. By placing this command in the `Rprofile.R` script, which is a script `R` runs on start up, we are always updating this variable every time we start up `R`. 
+## Installing and Using Libraries
+Now lets go ahead and install a couple of libraries by opening `R Studio` and looking in the window on the left side and making sure you are in the Console tab. This is where you can run "command line" code to `R` without a script. While not ideal for working on projects, it is fine for quick set-ups or function calls. 
 
-The left panel is our Console and this is what `R` is reporting. You can use this to enter single commands to `R` and then see the output from `R`. One of the key elements in this screen is the version located at the top of the print out. On the right side we have two panels, each with a variety of tabs. The upper-right panel is typically showing the *Environment* for `R`. This shows that "exists" in `R` in terms of objects or functions. With a fresh start such as this, the environment is barren and so `R` can not perform any analysis or do much because there is nothing to do anything to. Other tab of interest to us is the *History* tab. This allows us to access a log of all commands issued to `R` in our session.
+You have actually already done this when you installed the *usethis* package above. This time, however, we will install one of the power-house packages we will be using *tidyverse*.  *Tidyverse* is a package which is a collection of several packages that make getting, cleaning, manipulating, and visualizing data of various types (numbers, character strings, dates, etc.) much easier and intuitive. Try to install this package on your own, but if you struggle, here is the code.
 
-The lower-right panel acts as a auxiliary system that contains a file explorer, graphic viewer, and help screen. Again there are a set of tabs and the standard default is usally the *Files* tab. This is just like your file management system on your computer or windows explorer on a PC. The default location is typically the *Documents* folder on your system, but to see, we can go to the Console side and type the command `getwd()` which tells us the current working directory. Quickly notice thas as you started typing the console, `R Studio` tried to guess what you wanted in order to speed things up. This can be both a benefit and a curse so be aware and wary of it. Whatever the output shows, that is what is showing in the default view of the *Files* tab. 
-
-If you click on the *Plots* tab, you will see a blank screen. This tabs shows us any visualizations that we create in `R`. Remember that `R` is a command-line type language so it is text based and visualizations do not get "printed" in the output. Rather `R` saves the "code" for a visualization and then either saves it as an external file (.png, .jpeg, etc.) or just keeps the code in the environment. You need a separate program to translate the code into something visual and that is what the *Plot* tab does for us. Next is the *Packages* tab which shows all of the packages you have installed in your library and allows you to manage them here if you wish. We will not use this. The more useful tab is the next one labeled *Help*. We can input any command in the textbox in the upper-right corner of this tab and `R` will search through all of the packages and base `R` on our system and give us information and examples of that code. To see an example, type in the `getwd` command and see what help shows us. The last two tabs are used if you are doing `LaTeX` or `R Markdown` in `R Studio` which we do not have time to get into. 
-
-Across the top of the screen we see the standard "windows" type file system with our usual suspects: *File* and *Edit* all the way to *Help*. For our purposes we will mostly use the *Files* and the *Tools* command blocks. If you look to the far right along the top, you will see a drop-down arrow with the phrase **Project: (None)**. We will revisit that in a bit. Instead, click on the *Files* with your mouse and move down to the *New Files* item. This opens us a list of all the different types of files we can create within `R Studio` and you can see there is quite a bit which is why `R Studio` is so versatile. We will just lick the top choice of an *R Script*. When you click this the console window will shrink and slide down with a new window opening on the top-left side. This is, for all intense and purposes, a text editor and is where we will type our "script" that we want to run in the `R` environment. In this window, you will notice some icons across the top of the tab. The disk is to save the file and the *Run* icon will run the line the curser is located on whereas the *Source* icon will run the entire script. If we open additional scripts, they will show up in this window under different tabs along with any data views we use. 
-
-
+```R
+install.packages("tidyverse")
+```
 ## Project Management and GitHub
+Whether you are by yourself, working with a team, or, more to your cases, working with an advisor, having an effective "project" setup will help you organize your thoughts and ideas and provide an much easier way to interact with an advisor or co-author. While `RStudio` has a built-in project system, we are going use this in conjunction with `GitHub` to ensure there is always a copy of our information we can get to if needed. This is ideal if you are working across multiple devices and locations. 
 
-Whether you are by yourself, working with a team, or, more to your cases, working with an advisor, having an effective "project" setup will help you organize your thoughts and ideas and provide an much easier way to interact with an advisor or co-author. While `R Studio` has a built-in project system, we are going use this in conjunction with `GitHub` to ensure there is a copy of our information we can always get to if needed. Organization also helps you work with others and remember what you did and why when you revisit a project either an hour or a year after you started it. Organization also helps you should you need to prove or verify your work either to a professor or a journal when you submit for publication. This later issue, that of reproducability, is becoming even more important given the number of cases of academic misconduct being uncovered, even among Nobel Prize winners. We are going to organize our project in `R Studio` and then back it up in a GitHub Repository for both protection and for easier remote access by ourselves or co-workers. We start the process in reverse however.
-
+Organization also helps you work with others and remember what you did and why when you revisit a project either an hour or a year after you started it. Organization also helps you should you need to prove or verify your work either to a professor or a journal when you submit for publication. This later issue, that of reproducibility, is becoming even more important given the number of cases of academic misconduct being uncovered, even among Nobel Prize winners. We are going to organize our project in `RStudio` and then back it up in a `GitHub` Repository for both protection and for easier remote access by ourselves or co-workers. We start the process in reverse however.
 ### Create Repository on GitHub
-
-A Repository is a place on the GitHub cloud where you can keep relevant files for any given project. You have each setup a profile on `GitHub` and are all part of the GitHub Classroom environment for this class. Go there and check out the "Groves_R" assignment to clone a local copy of the repository for this class. Now go to [GitHub](www.github.com), log into your account, and find the new local repository for the Groves_R assignment on the left-side menu and click it. To ensure you are doing this correctly, you should see a message in the README.TXT file that indicates this is the Repository for the in-class work for the Introduction to R part of Economics 691. 
-
+A Repository is a place on the GitHub cloud where you can keep relevant files for any given project. You have each setup a profile on `GitHub` and are all part of the GitHub Classroom environment for this class. Use this URL link (https://classroom.github.com/a/aYMYVjZ6Go) to get to the `Groves R` Repo to check it out and clone a local copy in your `GitHub` account. From your own `GitHub` account, go to this repository and copy the URL line in the browser window or using the down-arrow of the green CODE button in `GitHub`. 
 ### Create Project in R-Studio
+As mentioned, `RStudio` has a system built into it that acts as a means for keeping information and data on a project together called *PROJECTS*. We can create a project on our computer only, or we can link it to a GitHub or similar type repository. Creating projects, however, is of little use if we do not know where we left them so I recommend that you create a **Projects** directory in your systems **My Documents** folder (or its Apple equivalent)
 
-As mentioned, `R Studio` has a system built into it that acts as a means for keeping information and data on a project together called *PROJECTS*. We can create a project on our computer only, or we can link it to a GitHub or similar type repository. Creating projects, however, is of little use if we do not know where we left them so we are going to use the File Explore feature in `R Studio` to create a **Projects** directory somewhere on our computer. To do this, navigate to the *Files* tab in the lower-right screen in `R Studio` and navigate to where you want your **Projects** directory to be located. Once there, click on the *New Folder* icon across the type of the *Files* tab and create a **Projects** directory.
-
-Next we will return to that drop-down arrow in the upper-right corner that says **PROJECT(none)**. Click on this and choose "New Project". A small screen will open on your computer and you need to click the Version Control banner and then click on the Git banner.  
-
+Next we will return to the drop-down arrow in the upper-right corner of our `RStudio` windows that says **PROJECT(none)**. Click on this and choose "New Project". A small screen will open on your computer and you need to click the Version Control banner and then click on the Git banner.  
 <p align="center">
   <img src="https://github.com/jrgroves/ECON691/assets/52717006/64332c4b-b877-40b7-bc5b-a5c91569ecc3"/>
 </p>
@@ -122,126 +91,95 @@ The window that is now open is asking for the URL from the repository that you c
   <img src="https://github.com/jrgroves/ECON691/assets/52717006/6a2e5628-6035-4016-9ab1-997a0459726a"/>
 </p>
 
-Once you hit "Create Project" it will appear that `R Studio` reloads and we will be ready to start working. The other thing this action does is "clones" the repository at that URL you listed and populates your computer with anything located in that reponsitory. You can verify this by looking at the *Files* tab and notice that it now switches to a newly created directory within your **Projects** directory with the same name as your repo on GitHub and sets the working directory in `R` to that location. To verify this, type the `getwd()` in the console and see what is reported.  The last thing you should notice that is different is that there is now a new tab in the upper-right window of `R Studio` called *Git*. Under this tab is one way we can interact with both `Git` and GitHub.
+Once you hit "Create Project" it will appear that `RStudio` reloads and we will be ready to start working. The other action you will notice is that a copy of the `Groves R` repo that you cloned to your `GitHub` account is now going to be copied, or cloned, to your device. You can verify this by looking at the *Files* tab in the lower-right side of `RStudio` and notice that it now switches to a newly created directory within your **Projects** directory with the same name as your repo on GitHub and sets the working directory in `R` to that location. To verify this, type the `getwd()` in the console and see what is reported.  The last thing you should notice that is different is that there is now a new tab in the upper-right window of `RStudio` called *Git*. Under this tab is one way we can interact with both `Git` and GitHub.
+### Directory Setup
+You will now have a project directory on your computer's hard drive that has a backup on the GitHub cloud. You can access the files on your computer using the *Files* tab in `R Stuido` or via your OS. Aside from keeping track of your work, the organization of your work is also important and so we will set up a directory structure that is both simple and understandable by an outside observer. Within your main project directory you need to create three new sub-directories called: Data, Build, and Analysis. You can also include others such as "Paper" for any documents for the final essay you will create or "Archive" which I will use if I decide to go in a completely different direction in coding my product. Within both the "Build" and "Analysis" directory, you want to create the directories: Code and Output. Using this framework will not only help with organization, but accessing data and scripts just got significantly easier.
+## Commit-Push-Pull
+### Create
+Version control allows us to keep track of changes both by us and anyone else that has permission to access our repository. It does not, however, keep track of all of our key strokes and it can only track what we tell it to track and it takes a "snapshot" only when we tell it to. Whenever we create or modify a file, version control, or in this case `Git`, will recognize that it is different than what is currently in the repository, but that is the extent of what it will do on its own. We we complete our modifications and want to update what we have on our main or branch, we must first "stage" the files. 
 
-## Your First Push
-Version control allows us to keep track of changes both by us and anyone else that has permission to access our repository. It does not, however, keep track of all of our key strokes and it can only track what we tell it to track and it takes a "snapshot" only when we tell it to. Whenever we create or modify a file, version control, or in this `Git` will recognize that it is different than what is currently in the repository, but that is the extent of what it will do on its own. We we complete our modifications and want to update what we have on our main or branch, we must first "stage" the files. 
+We can stage as many files as we want and we can think of "staging" as placing our newly changed files in an envelop that we are going to "mail" to our repo. To actually submit the changes so that version control will commit them to "memory", we have to commit them. When we commit a set of changes, we have the option to add a comment to our commit to tell ourselves or others what we changed in this part that is being committed. Once we commit, version control creates a new "version" of the project using those files and creates a history which contains the older versions of our project prior to those changes that were committed.
 
-We can stage as many files as we want and we can think of "staging" as placing our newly changed files in an envelop that we are going to "mail" to our repo. To actually submit the changes so that version control will commit them to "memory", we have to commit them. When we commit a set of changes, we have the option to add a comment to our commit to tell ourselves or others what we changed in this part that is being committed. Once we commit, version control creates a new "version" of the project using those files and creates a history which contains the older versions of our project prior to those changes that were committed. To summarize the process using an example, lets say we have a some sort of project that is out in the world, such as a software program. Overtime we decide we need to add features, remove obsolute features, or fix errors, but we do not want to mess up what we have that works. This is where creating a "branch" comes into play. A branch starts with a copy of what we currently have "out in the world" and we can "check out" the program, make changes, and then commit those changes to the branch. Let's say our changes are going to take a month to finish; we would want to commit our work each day or couple of hours so we do not loose anything, but by committing it via version control, if we every realize we were going in the wrong direction, we can always recover some previous version. Only after we have made all of our changes and run the branch program to test it, will we merge our branch back to our main which then replaces the original program with the new version while still keeping a historical version of the original. 
+To practice this in our example, we are going to create a text file to tract what we do each day in class. In `RStudio`, use the `FILE--->New File--->Markdown File` and this will split the left-side of your screen as the Editor is opened. The Console will slide to the bottom and you will be able to edit documents and scripts in the upper frame. Type something in this empty markdown file.
+### Commit
+Once that is completed, click on the disk icon and save the file as **Tracking** and you can simply save it in your current directory (which should be your project directory). Once the file is saved, go to the upper-right window and click on the GIT tab. You will see a list of files there that you can choose to "stage" so look for the newly created **Tracking** file. You should see an empty checkbox and two yellow squares to the left of the file name. Once you click the checkbox, the two yellow will become one green with the letter 'A' in the box. This means the file is "staged." If you had modified a file already part of the repository, you would see the empty checkbox and a blue square indicating it has been modified and not committed. 
 
-To practice this in our example, we are going to modify our README.md file inside of `R Studio`. The easiest way to do this is to double-lick on the *README.md* file in the file manger and notice that a new screen opens at the top of the left-side of `R Studio` and you should see the following:
+We want to commit our Tracking file to the repository so after we click the checkbox and see the green box, we click on the COMMIT button near the top of this GIT tab. That will open a new window and all we want to is type something the upper-right window. This is our commit message to remind us later what we committed this time. Type something like "initial commit" and then click the COMMIT button. A status window will pop up and you can click CLOSE once it is finished. You can then exit out of the other window that is open (where you put your commit message) and return to the GIT tab. 
+### Push
+At this point, the file is committed to the version of our repository on your device, but not at `GitHub`. You can verify this by looking at the repo in your browser. Returning to `RStudio` and the GIT tab, you will see a button that says ***PUSH***. Click this and the version of the repository on your device will be "pushed" up to the cloud. Once the status windows indicates it is finish, return to your browser and refresh and you should now see your Tracking file in your directory online. Congratulations, you just pushed your first commit and push to the cloud.
 
-```R
-# Groves_R
-This is the in-class work for the Introduction to R in Economics 691. You will need to copy of the location or URL of this repository which you will find in the address bar of the browser.
-```
-Using what you recall from previous classes on markdown, add a sub-heading with your last name and then a line under that indicating in some way that this is you copy of the class repository and then save this new file using the disk icon in the upper-left of the editor window. If you get lost or do not recall, an example is below.
-<details>
-  <summary> Example: Push and Pull #1 </summary>
-  
-```R
-#Groves_R
-This is the in-class work for the Introduction to R in Economics 691. You will need to copy of the location or URL of this repository which you will find in the address bar of the browser.
+To verify this, go to the repository on GitHub through your browser, make sure to refresh you web view and you should now see the **Tracking.md** in your GitHub Repository.
 
-##Groves_R
-This is my own personal copy of the main repository for the Introduction to R in Economics 691 taught by the balding guy!
-```
-</details>
+### Pull
+Still in your browser, click on the **Tracking.md** folder and then click on the pen icon in the upper-left of the screen. Once you do that, we are going to add something to the **Tracking.md** file to simulate having someone else working on this project and making a change. Under what you have already written, create a sub-heading (or Heading 2) and then under that, place your name and something else such as your desired field. Once completed, click on the ***Commit changes...*** button in the upper-left of the screen. Just as in `R Studio` we see a screen that summarizes what we just did in a suggested commit message and an option to add to this. We will just accept what is here and click the ***Commit changes*** button. 
 
-We will notice when we save this file that we get some action in the *Git* tab in the upper-right "environment" window. You should now see the "README.md" file in the window with a blue square to the left of the file name with a white "M" in the box. This indicates that a file that is part of the repository has been modified but has not yet been staged or committed. To verify this, return to the web browser and look at the "README.md" file and notice your new line is not present. The same would be true if we look at the local repository on your computer; however, the local version of the "README.md" file saved to your computer would have changed. To get this change to the local repository, we need to stage and then commit the change. If you click on the empty box in front of the "README.md" file you will see the blue box shift to the left side indicating that it is now staged and ready to commit. To "commit" this file we click on the *Commit* icon which will then open a new window. In this new window, we will see three smaller panels. The upper-left shows us all the files that are staged, the upper-right is going to be where we can add our comment, and the lower panel is a "comparison" or "dif" that shows us additions, deletions, and what remains unchanged between the stagged file and the one in the previous commit. 
+When we return to the main page we will see that the **Tracking.md** file is listed to have been altered "now" and if we view it, we see the new additions. Turning to `R Studio`, however, we see that the new material is NOT present in our **Tracking.md** file stored locally. To resolve this, we need to *PULL* the data down from the cloud onto our device and we do that with the corresponding button in the Git tab. If the file is still open in our editor we may need to close it, but when we view or reopen the file after a successful pull, we will now see our updated material. 
 
-You should see the original text in gray and your new addition highlighted in green. Had we deleted something from the what was originally opened, we would see that highlighted in red. We will add the comment "Added our personal touch" to the comment box and then click on the *Commit* button. What this has done is taken a snapshot of everything we had stagged and "committed" it to the local repository. Switch over to your web browser and refresh your `GitHub` repository for our project and notice that nothing changed! This is because our commit ONLY added our changes to the version control tracking files on our local computer. If we want to send these changes, along with updating the files in our repository, we have to "Push" them up to the cloud. If you return to `R Studio` you will notice in the *Git* tab an icon that says "Push" and by licking this, it will send our version control file and copies of the updated files in our project that we had committed, to the cloud. Now return to the web browser, refresh, and notice the "README.md" file has changed.
-## Your First Pull
-Since you do not have a co-author on this project, we need to simulate someone making a change to the files on the repo. To simulate this, go to the main page of the repository on your web browser and notice the structure already cloned there includes a directory called "Data." For our purposes this is going to be home to all of our raw data from which we will work and that we obtained elsewhere. If you click here you will see a single ".csv" file that we will use in our work and assignments already present. Returning to the home directory by clicking the link at the top next to the branch ID, click on the "Add file" button and create a new file. File organization is also extremely important and so we will start setting up our project directory here on the web version of our repository. Generally we want to keep our work local, but this is a way to simulate a co-author or advisor making a change. Where you place the name of file type the following: ``Build\Code\First.R``. This is going to create a new directory, a sub-directory, and a new file called "First" and it will create it as an `R script` file. Copy the code from the box below into the open editor and then commit the changes. You do not have enter a commit comment, but something like "first commit" would be fine. 
+# Getting Started with R
+## Script Setup
+While we may try out commands in our source space, we want to track everything we do in our scripts. Furthermore, we want to ensure that we know what each of our scripts do and we set them up and note them so that anyone can come along behind us and replicate what we do. As with most things, organization is the key. 
 
-```R
-rm(list=ls())
-A <- "Hello world!"
-A
-```
-You have created a new script file and placed it in the directory structure **Build --> Code** which is where we will hold all of our code that we use to clean and construct the core dataset for our project. Switch over to `R Studio` and look in the *Files* tab in the auxiliary window, navigate to and double-click "First.R". You can't can you? This is because the only place the changes are held are on the cloud and possibly a co-author's local system. You need to get the updated version of the project down to your local system and you do that my pulling it from the repository. Above the directory window in the environment panel of `R Studio` under the **git** tab you will see a button with a down arrow and the work "pull". Click that.
+To see what we are going to do here, copy a new script by using `FILE--->New File--->R Script`
+sequence which will open a blank script page in your editor. A script should be divided up into about three different parts: Information; Load up; and Work. In the information section we want to add a comment at the top of the script explaining what we are designing this script to do. Next we want to include our name and a creation data and a placeholder for updates that we may perform on this script as our project evolves. All of this should be in comment form so every line needs a hashtag (`#`) starting the line. 
 
-Now you will see the new directory **BUILD** and if you double-click that you will see the **Code** directory and in there you will find your "First.R" file. Click this and it will open in your editory window. What this code will do is the following:
+Next we will load up our session. This is where we will load any data we need and install libraries for this script. Before that, however, we want to make sure we are starting with a clean slate so I always open all my scripts with the command `rm(list = ls())` which will clear the environment of everything that could be a fragment from previous projects. You should note that this clears EVERYTHING in the active memory for `R` so any unsaved data, function, or libraries will be removed from the active memory. 
 
-- The first line will completely clear the environment. The *rm()* command will remove anything within its argument (inside the parenthesis) and the text `list = ls()` is using the *ls()* command to list everything in the environment (because the argument space is left to the default by leaving it empty).
-- The second line assigns the character string "Hello world!" to the object **A**. `R` is an object based language and so anything that `R` uses must be assigned a unique name and that "thing" can be any number of types of objects or classes. What we have here is a string. Notice that we use the syntax "<-" to assign the character string to the object **A**. This is because the syntax "=" indicates an equality and that is not what we are doing, we are assigning.
-- The third line then recalls the object **A** and the output is printed in the console. We can now refer to the character string "Hello world!" by its object assignment.
-
-To run this script, we "source" the script. We can do this two ways: via the editor and via the console. With the editor we only need click the button labled "Source" in the upper-right side of the editor. This will run the script and "echo" each step in the console meaning it will print each line of code (up to some limit). You should see the following in your console after you click on the button.
-
-```R
-> rm(list=ls())
-
-> A <- "Hello world!"
-
-> A
-[1] "Hello world!"
-```
-
-A second way is to source the script directly in the console which is basically what the button did for us. If you look at your output, at the top you will see `source("~/Projects/Groves_R/Build/Code/First.R", echo=TRUE)`. What the *source()* command does is runs the file that is listed in its arguement and, in this case, the option "echo" is set equal to TRUE which means it is "turned on" so we see each line of output. We also see that in the file name we have to list the exact location of the file and in that text we see the tilda symbol (\~). This represents the main path that is currently saved in the R profile. You can find this by using the command *path.expand('~')*. While this is fine, it is not good to use this if you are going to be working with others because their computer structure may not be the same as yours. 
-
-To enhance the reproducability of any path that we use, we want to instead refer to the current workind directory which we can find using the command *getwd()*. The advantage of using projects in `R Studio` is that the working directory is set for us as the location of this particular project so what you should see is the main path from above along with the location of where you decided to place your projects on your local computer followed by the name of the project. We can access this in our code by using the period syntax. Therefore, to run our script, we can instead type `source("./Build/Code/First.R")` in the console. Notice when we hit return, nothing happens really. This is because the default option for "echo" in the *source()* command is set to FALSE or "off". However, something did happen because if we now type `A` in the console and hit enter, you will see your message.
-#r #Programing #Class #census #Department 
-
-# Getting Data
-
+After this, we can add our libraries. There are a few ways to do this, however, the simplest is to just use the `library()` command with the desired library in the command. For our purposes, we want to load the *tidyverse* library. Following our libraries, we want to load any data that we will be using in our analysis and so we need to go out and get some. 
+## Getting Data Into R
 The core of any empirical research project is the data, and depending on your project and level of analysis, obtaining that data can be easy or hard. In microeconomics analysis, the easier the data is to obtain, the less ripe that avenue of research is likely to be. More often than not, the data you want is not going to be a simple point-and-click away. You'll need to find creative means to put the data together, so we'll look at various methods for obtaining data.
 
 Additionally, it is more than likely that you will be bringing in some of the data from elsewhere, and so we need to learn how to read data into our `R environment` for analysis. Finally, we will likely need to join data from various sources to get the full dataset needed for a correct analysis.
 
 Another important factor to keep in mind is the need for you or anyone else to be able to reproduce any project. In terms of obtaining, cleaning, and merging datasets, we should keep the data we bring into our analysis as raw as possible and do any manipulation and merging within `R` via a script. This not only preserves the original copy of the data but also ensures we have a written record, via the script, of what we did and how we got the data we eventually used.
-## Delimited Files
-The best way to store raw data is in an independent form such as a delimited file, also known as delimiter-separated value, which is a text version of a file with some special character, commonly a "tab" or a "comma" used to separate elements of an observation with each observation being on a single line. Data kept in propriety form will add a barrier to reproduction, especially if that program is no longer widely available whereas data in simple text of delineated form can always be read. The most common form of data is saved as a .csv file which is a text file where each "column" of data is separated by a comma. In this case you can simply use the *read.csv()* command to read the data into the global environment of `R`. As a project for our examples and assignments we will be utilizing data which tracts UFO sighting across the global from about 1910 which I obtained from the kaggle website[^1]. Using the command below will read the .csv file into the environment and saved to the object "ufo".
+### Delimited Files
+The best way to store raw data is in an independent form such as a delimited file, also known as delimiter-separated value, which is a text version of a file with some special character, commonly a "tab" or a "comma" used to separate elements of an observation with each observation being on a single line. Data kept in propriety form will add a barrier to reproduction, especially if that program is no longer widely available whereas data in simple text of delineated form can always be read. The most common form of data is saved as a .csv file which is a text file where each "column" of data is separated by a comma. In this case you can simply use the *read.csv()* command to read the data into the global environment of `R`. 
 
-[^1]: https://www.kaggle.com/datasets/NUFORC/ufo-sightings?resource=download 
+As a project for our introduction to `R`, we will look at gasoline consumption versus the consumption of cotton in the United States. To get the first part of our data, we will visit the U.S. Energy Information Administration's website and find the [Weekly U.S. Product Supplied of Finished Motor Gasoline](https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=WGFUPUS2&f=W).  On this page, just above the graph, you will see a download button. Push this and choose "Download Data" and direct the pop-up window to your "./Data/" folder and save the data. You can choose a smaller file name if you wish and for our purpose we will call the file gas.csv.
 
+In our script, after our libraries are loaded, we want to load our data and so we will use the following command line.
 ```R
-ufo <- read.csv(file = "./Data/scrubbed.csv", header = TRUE, as.is = TRUE, sep = ",")
+gas <- read.csv(file = "./Data/gas.csv", header = TRUE, as.is = TRUE, sep = ",")
 ```
-Before breaking down this command, there is one note we should make; there is an alternative version called *read.csv2()*. The difference is that the command above treats commas as separators and periods as decimals whereas the latter assumes that periods are the separators while commas are used as decimals. Now diving into the command we see first we list the location of the file and filename we want to read. Again we notice the use of the period to indicate the current working directory. Next we set the option "header" to TRUE to indicate that the first row of the data are column headers and thus should be used as the column names in the resulting dataframe. Next we tell `R` to read the file as it is formatted meaning that characters are read as character and numbers are read as numeric. Finally, we have the option "sep" which sets the separator for the delineated file. The default is the comma, however, we can also use other options such as the bar "|". Running this command creates the object **ufo** and assign the data from the file "scrubbed.csv".  
+Before breaking down this command, note that there is a alternative command, *read.csv2()* which treats periods are the separators while commas are used as decimals in accordance with European standards. 
 
-`R` is an object-based language and the most common form of an object is a vector. This is what we created with our first script we wrote when we created the object **A**. The thing about vectors, however, is that they must be constructed of a single type of data meaning that we can not mix numerical and character data within the same vector (unless we translate the numerical data to a character type). You either still have the A in your environment or you can replace it by opening the file "First.R" and then placing your cursor in the editor window on the line that assigns the object **A** and clicking the "Run" button at the top of the editor window. Once this is done, type `is(A)` into the console and you will see 
+When working with commands such as this, we include in the parathesis a set of controls for the command. Some are optional and some are required. In this case, the first option we set is the location of the file and filename we want to read. Notice the use of the period to indicate that we are in our current working directory which should be the project directory. This is key because if I were to clone your repository and try to run this on my device, it will work just fine if you code your file location "relative" to your current project directory. If you try to code the location using the exact location, it would most likely be different than where I would have put the project and so we have problems. Using this period is a way to code all location "relative" to whatever the current device has set as the working directory. 
 
-```R
+Next we set the option "header" to TRUE to indicate that the first row of the data are column headers and thus should be used as the column names in the resulting dataframe. Next we tell `R` to read the file as it is formatted meaning that characters are read as character and numbers are read as numeric. Finally, we have the option "sep" which sets the separator for the delineated file. The default is the comma, however, we can also use other options such as the bar "|". Running this command creates the object **gas** and assign the data from the file "gas.csv".  
+
+>[!Language Lesson]
+You may have encountered an error message, however, most likely the data loaded and you can see the object **gas** in the Environment. This data, however, is completely useless to you and you may not even know it. Take a closer look and notice that there are 1858 observations but only 1 variable.
+>
+`R` is an object-based language and the most common form of an object is a vector. To see what we mean, type `A <- "Hello world!"` in the console and push Enter. This creates the *object* called **A** and as assigned it the value "Hello world!". The thing about vectors, however, is that they must be constructed of a single type of data meaning that we can not mix numerical and character data within the same vector (unless we translate the numerical data to a character type). To see what we mean, type `is(A)` into the console and you will see 
+>
+>```R
 > is(A)
 [1] "character"           "vector"              "data.frameRowLabels" "SuperClassMethod"
-```
-
-The key information here is that this is a "character" type and that A is a vector. We can add to this vector using the code `A[2]<-"Goodbye"` and now if we type **A** into the console we see we have both "Hello world!" and "Goodbye". We have a vector with two pieces of data, both of which are characters, and we can access them using the brackets and numbers just like with matrix vectors. Now type `A[3] <- 50` and hit enter and you see see that "50" is not listed in the environment as part of the vector object **A**. Finally, type `A[3]/5` and see what happens; you should get an error message. This is because a vector can only be of one type of data and when we entered 50 into a vector that is already made up on character types, R automatically assumed we meant the character 50, not the number 50. 
-
+>```
+>
+The key information here is that this is a "character" type and that **A** is a vector. We can add to this vector using the code `A[2]<-"Goodbye"` and now if we type **A** into the console we see we have both "Hello world!" and "Goodbye". We have a vector with two pieces of data, both of which are characters, and we can access them using the brackets and numbers just like with matrix vectors. Now type `A[3] <- 50` and hit enter and you see see that "50" is now listed in the environment as part of the vector object **A**. Finally, type `A[3]/5` and see what happens; you should get an error message. This is because a vector can only be of one type of data and when we entered 50 into a vector that is already made up on character types, `R` automatically assumed we meant the character 50, not the number 50. 
+>
 Now type `B <- 50` and then type `B[1]`. You should get a read out in the console of 50 without quotation marks as quotations is a visual cue that the output is character not numeric. Now type `B[1]/5` and you should get 10. To see why, use the *is()* command to determine what object **B** is. You should see if it a numeric vector.
+>
+If we need data that contains both numerical and character vectors, we can collect the different vectors in to a dataframe. A dataframe can contain any number of different vectors types but they must have be the same size and each vector must contain the same type of data. While not a precise comparison, you can think of a dataframe as an Excel spreadsheet.
 
-> What do you think will happen if you try to add the phrase "Over the Hill" to object B?
-
-Typically, as is the case of our **ufo** object, we will need something with both numerical and character data along with other types and classes. To contain this, we need something else called a dataframe. Using the *is()* command we see that our object **ufo** is a dataframe made up of vectors. You can think of this as a matrix type element constructed of column vectors where each column vector contains data of a similar type. Another way to think of it is like an Excel spreadsheet. Because the object is a dataframe or a set of vectors, each vector or column of our dataframe has a name by which we can access and manipulate that vector. To get a list of names we simply use the command *names()* and input our dataframe (or other object) as the argument. 
+In our case with our **gas** dataframe, we would like to see what it looks like to ensure we have imported the right data so we can use the `head()` command with the dataframe name listed as the option. Doing this we see we might have a problem because where we would expect to see vectors with column names and data, we see a string of letters and words and no real organizational structure. To see why, left-click the gas.csv file int he Files tab and click "View File" which will open a view of the file in the editor pane. We notice that while we would expect the first row to be headers denoting the data columns, we instead have several lines of text. This is not uncommon, especially with government data, and we can avoid pulling this data in using the `skip =` option in our `read.csv()` command.
 
 ```R
-> names(ufo)
- [1] "datetime"             "city"                 "state"                "country"             
- [5] "shape"                "duration..seconds."   "duration..hours.min." "comments"            
- [9] "date.posted"          "latitude"             "longitude"
+gas <- read.csv(file = "./Data/gas.csv", header = TRUE, as.is = TRUE, sep = ",", skip = 4)
 ```
-We see that our dataframe contains information about the date and time of the sighting, the city, state, and country of the sighting, the shape of the object seen, how long it was visible in both seconds and hours, some comments about the sighting, the date the information was posted in the main dataset and finally the latitude and longitude of the sighting location. 
 
-> NOTE: DO NOT use spaces in names of objects or vectors within a dataframe. Either use camelBack (capitalization of each word with no spaces), periods, or underscores. While it is possible to use spaces, it can create major complications and more often than not will lead to errors in running your code and confusion in reading your code.
+Running this command gives us a new version of the **gas** object (note that you were not asked if you wanted to replace it, it just does so) that has 1854 observations and 2 variables. Using our `head()` command shows us the data is mostly in the expected form now with the exception of the extremely long column names. If we look at our view of gas.csv in the editor pane, we see that the labels contained spaces whereas in the console the spaces are replaced with periods. This is because spaces are not allowed in column names or in object names. 
 
-To see our dataframe we can access it in a few ways. The worse way would be to simply type in **ufo** into the console. The method we use should be dictated by the goal. If we are simply checking to make sure all is well with the data, we can use the *head()* or *tail()* command. Using this for any object will give you the first six rows of the dataframe or last six rows, respectively. This gives us a feel for our data. If we want to see the entire dataframe, we can use the command *view()* which will open a spreadsheet like tab in our editor window space in which we can scroll through the entire dataframe. We can only view this, however, we can not edit anything. We can open a special editing window, but remember, we want to track all of our edits so we will avoid doing that. 
+>[!NOTE]
+>DO NOT use spaces in names of objects or vectors within a dataframe. Either use camelBack (capitalization of each word with no spaces), periods, or underscores. While it is possible to use spaces, it can create major complications and more often than not will lead to errors in running your code and confusion in reading your code.
 
-To get some practice with what we have done so far, use the green plus in the upper-left side of the `R Studio` window and choose "R Script" to create a new script. In the fresh tab that opens in the editor, type of the code to clear the environment and then read in the "scrubbed.csv" file into the environment as the object **ufo**. Once you complete this, save it as "setup" using the blue disk in the editor. Try to do it yourself, but the code is below to help.
-
-<strong>Example: Scripting the X Files</strong>
-
-```R
-    rm(list = ls())
-    ufo <- read.csv(file = "./Data/scrubbed.csv", header = TRUE, as.is = TRUE)
-```  
+To see our dataframe we can access it in a few ways. The worse way would be to simply type in **gas** into the console. The method we use should be dictated by the goal. If we are simply checking to make sure all is well with the data, we can use the `head()` or `tail()` command. Using this for any object will give you the first six rows of the dataframe or last six rows, respectively. This gives us a feel for our data. If we want to see the entire dataframe, we can use the command `view()` which will open a spreadsheet like tab in our editor window space in which we can scroll through the entire dataframe. We can only view this, however, we can not edit anything. We can open a special editing window, but remember, we want to track all of our edits so we will avoid doing that. 
 ## API Downloads
 Another means of obtaining data, especially commonly sourced data, is to use an Application Programming Interface (API) command. An API is an interface between two programs to exchange information.[^2] The most common type of API is a REST API which uses commands such as *get()*, *put()*, and *delete()*, to transfer data via HTTP protocols. Each different API will have different requirements to setup communications; however, most use some sort of key and then a means of sending the *get()* command to obtain data. 
 
 [^2]: https://aws.amazon.com/what-is/api/#:~:text=API%20stands%20for%20Application%20Programming,software%20with%20a%20distinct%20function.
 
 For our work, we will learn to access the U.S. Census API which allows us to code downloads of data from the decennial census and the American Community Survey (ACS). This is such a common occurrence, that there is a package written to simplify the communication between our `R` environment and the Census servers, called *tidycensus*.[^3] The code below is an example of what we would use to download data from the 2020 five-year data file from the ACS server.
-
 [^3]: https://statsandr.com/blog/web-scraping-in-r/
 
 ### Working with Census Data via API
@@ -486,7 +424,7 @@ When dealing in graphics we also need to learn a little about color theory. Do n
 The *ggplot2* package is extremely powerful in its ability to customize and stack images. For example, we could graph several different data in a scatter plot or line graph form by overlaying the scatterplot and the line graph separately. The *ggplot*2 packages does this using *geom*s. Each graph type has its own geom and within that geom, we can set the *aesthetics* which include, at a minimum, the variables on the x- and y-axis.
 
 ### Box-Whisker Plot
-We want to visualize how the sightings have changed across the decades and we also want to get a sense for outliers because we suspect we will have some. To accomplish this, we will create a box-whisker plot of our data by decade which shows the interquartile range, median values, and outliers, and we will use our **ufo.map** object to create this. 
+We want to visualize how the sightings have changed across the decades and we also want to get a sense for outliers because we suspect we will have some. To accomplish this, we will create a box-whisker plot of our data b.y decade which shows the interquartile range, median values, and outliers, and we will use our **ufo.map** object to create this. 
   
 ```R
 ggplot(ufo.map) +
@@ -517,7 +455,7 @@ Next we want to change the labels and we can do this with one command: `labs`. A
 
 ```R
     labs(title = "Box Plot of UFO sightings by Decade in the U.S.",
-         caption = "Data obtained from Kaggle.com",
+         subtitle = "Data obtained from Kaggle.com",
          x = "Decade",
          y = "Natural Log of Annual Sightings")
 ```
